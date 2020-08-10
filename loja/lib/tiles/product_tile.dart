@@ -12,8 +12,30 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ProductScreen(product)));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => ProductScreen(product)));
+      },
+      onLongPress: () {
+        showDialog(
+            context: context,
+            builder: (context) => SimpleDialog(
+                  title: const Text('Olá,'),
+                  children: <Widget>[
+                    SimpleDialogOption(
+                        child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "Compre pq você vai...",
+                              style: TextStyle(color: Colors.black)),
+                          WidgetSpan(
+                            child: Icon(Icons.favorite, size: 14),
+                          ),
+                        ],
+                      ),
+                    )),
+                  ],
+                ));
       },
       child: Card(
         child: type == 'grid'
