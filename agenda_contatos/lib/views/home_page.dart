@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:agenda_contatos/helpers/contact_helper.dart';
 import 'package:agenda_contatos/views/contact_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum OrderOptions { orderaz, orderza }
@@ -138,6 +139,29 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(color: Colors.red, fontSize: 20.0),
                           ),
                         ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.message,
+                              color: Colors.red,
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                FlutterOpenWhatsapp.sendSingleMessage(
+                                    "5535${contacts[index].phone}", "Ola, tudo bem?");
+                              },
+                              child: Text(
+                                "Enviar mensagem",
+                                style: TextStyle(
+                                    color: Colors.red, fontSize: 20.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.center,
                       ),
                       Padding(
                         padding: EdgeInsets.all(10.0),

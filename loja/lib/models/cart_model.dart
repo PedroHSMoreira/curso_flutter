@@ -8,7 +8,14 @@ class CartModel extends Model {
   UserModel user;
   List<CartProduct> products = [];
 
-  CartModel(this.user);
+  String couponCode;
+  int discountPercentage = 0;
+
+  CartModel(this.user) {
+    if (user.isLoggedIn()) {
+      _loadCartItems();
+    }
+  }
 
   bool isLoading = false;
 
@@ -16,17 +23,29 @@ class CartModel extends Model {
       ScopedModel.of<CartModel>(context);
 
   void addCartItem(CartProduct cartProduct) {
-    products.add(cartProduct);
+    List _sameProduct = products
+        .where((element) =>
+            element.pId == cartProduct.pId && element.size == cartProduct.size)
+        .toList();
+    if (_sameProduct.isNotEmpty) {
+      _sameProduct.forEach((element) {
+        cartProduct.cId = element.cId;
+        cartProduct.quantity = element.quantity++;
+      });
+      incProduct(cartProduct);
+    } else {
+      products.add(cartProduct);
 
-    Firestore.instance
-        .collection('users')
-        .document(user.firebaseUser.uid)
-        .collection('cart')
-        .add(cartProduct.toMap())
-        .then((value) {
-      cartProduct.cId = value.documentID;
-    });
-    notifyListeners();
+      Firestore.instance
+          .collection('users')
+          .document(user.firebaseUser.uid)
+          .collection('cart')
+          .add(cartProduct.toMap())
+          .then((value) {
+        cartProduct.cId = value.documentID;
+      });
+      notifyListeners();
+    }
   }
 
   void removeCartItem(CartProduct cartProduct) {
@@ -38,6 +57,50 @@ class CartModel extends Model {
         .delete();
 
     products.remove(cartProduct);
+    notifyListeners();
+  }
+
+  void decProduct(CartProduct cartProduct) {
+    cartProduct.quantity--;
+
+    Firestore.instance
+        .collection("users")
+        .document(user.firebaseUser.uid)
+        .collection("cart")
+        .document(cartProduct.cId)
+        .updateData(cartProduct.toMap());
+
+    notifyListeners();
+  }
+
+  void incProduct(CartProduct cartProduct) {
+    cartProduct.quantity++;
+
+    Firestore.instance
+        .collection("users")
+        .document(user.firebaseUser.uid)
+        .collection("cart")
+        .document(cartProduct.cId)
+        .updateData(cartProduct.toMap());
+
+    notifyListeners();
+  }
+
+  void setCoupon(String couponCode, int discountPercentage) {
+    this.couponCode = couponCode;
+    this.discountPercentage = discountPercentage;
+  }
+
+  void _loadCartItems() async {
+    QuerySnapshot query = await Firestore.instance
+        .collection("users")
+        .document(user.firebaseUser.uid)
+        .collection("cart")
+        .getDocuments();
+
+    products =
+        query.documents.map((doc) => CartProduct.fromDocument(doc)).toList();
+
     notifyListeners();
   }
 }

@@ -17,7 +17,7 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   final ProductData product;
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   String size;
 
   _ProductScreenState(this.product);
@@ -27,6 +27,7 @@ class _ProductScreenState extends State<ProductScreen> {
     final Color primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(product.title),
         centerTitle: true,
@@ -128,6 +129,16 @@ class _ProductScreenState extends State<ProductScreen> {
                               cartProduct.category = product.category;
 
                               CartModel.of(context).addCartItem(cartProduct);
+                              _scaffoldKey.currentState.showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Produto adicionado ao carrinho!",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  backgroundColor: Colors.green,
+                                  duration: Duration(milliseconds: 500),
+                                ),
+                              );
                             } else {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => LoginScreen()));
