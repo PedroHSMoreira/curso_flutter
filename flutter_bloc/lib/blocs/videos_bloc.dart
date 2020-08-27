@@ -4,13 +4,13 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter_bloc/api.dart';
 import 'package:flutter_bloc/models/video.dart';
 
-
 class VideosBloc implements BlocBase {
   Api api;
 
   List<Video> videos;
 
-  final StreamController<List<Video>> _videosController = StreamController<List<Video>>();
+  final StreamController<List<Video>> _videosController =
+      StreamController<List<Video>>();
   Stream get outVideos => _videosController.stream;
 
   final StreamController<String> _searchController = StreamController<String>();
@@ -22,7 +22,12 @@ class VideosBloc implements BlocBase {
   }
 
   void _search(String search) async {
-    videos = await api.search(search);
+    if (search != null) {
+      _videosController.sink.add([]);
+      videos = await api.search(search);
+    } else {
+      videos += await api.nextPage();
+    }
     _videosController.sink.add(videos);
   }
 
@@ -33,22 +38,14 @@ class VideosBloc implements BlocBase {
   }
 
   @override
-  void addListener(listener) {
-      // TODO: implement addListener
-    }
-  
-    @override
-    // TODO: implement hasListeners
-    bool get hasListeners => throw UnimplementedError();
-  
-    @override
-    void notifyListeners() {
-      // TODO: implement notifyListeners
-    }
-  
-    @override
-    void removeListener(listener) {
-    // TODO: implement removeListener
-  }
+  void addListener(listener) {}
 
+  @override
+  bool get hasListeners => throw UnimplementedError();
+
+  @override
+  void notifyListeners() {}
+
+  @override
+  void removeListener(listener) {}
 }
