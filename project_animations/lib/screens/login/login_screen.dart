@@ -1,5 +1,7 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:project_animations/screens/home/home_screen.dart';
 import 'package:project_animations/screens/login/widgets/form_container.dart';
 import 'package:project_animations/screens/login/widgets/sign_up_button.dart';
 import 'package:project_animations/screens/login/widgets/stagger_animation.dart';
@@ -13,6 +15,8 @@ class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
 
+  String moonAnim = "";
+
   @override
   void initState() {
     super.initState();
@@ -21,6 +25,21 @@ class _LoginScreenState extends State<LoginScreen>
       vsync: this,
       duration: Duration(seconds: 2),
     );
+
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.forward) {
+        setState(() {
+        moonAnim = "Flying";  
+        });
+      }
+      if (status == AnimationStatus.completed) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -49,15 +68,24 @@ class _LoginScreenState extends State<LoginScreen>
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Padding(
+                    Container(
                       padding: EdgeInsets.only(top: 70, bottom: 32),
-                      child: SvgPicture.asset(
-                        "images/moon.svg",
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.contain,
+                      height: 300,
+                      width: 300,
+                      child: FlareActor(
+                        "images/moon_anim.flr",
+                        animation: moonAnim,
                       ),
                     ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(top: 70, bottom: 32),
+                    //   child: SvgPicture.asset(
+                    //     "images/moon.svg",
+                    //     width: 150,
+                    //     height: 150,
+                    //     fit: BoxFit.contain,
+                    //   ),
+                    // ),
                     FormContainer(),
                     SignUpButton(),
                   ],

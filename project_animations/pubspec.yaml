@@ -29,6 +29,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
   flutter_svg: ^0.18.1
+  flare_flutter: ^2.0.6
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,7 @@ flutter:
     - images/background.jpg
     - images/perfil.jpeg
     - images/moon.svg
+    - images/moon_anim.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

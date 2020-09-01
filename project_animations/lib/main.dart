@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_animations/screens/home/home_screen.dart';
 import 'package:project_animations/screens/login/login_screen.dart';
 
 void main() {
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Animations',
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
