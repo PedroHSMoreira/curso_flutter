@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:869315275726:android:1164b0a9894529cf28199f",
         "android_client_info": {
-          "package_name": "br.com.myapp.loja"
+          "package_name": "com.example.store_management"
         }
       },
       "oauth_client": [
@@ -39,7 +39,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:869315275726:android:2593bdb82d2ff5ab28199f",
         "android_client_info": {
-          "package_name": "br.com.myapp.loja"
+          "package_name": "com.example.store_management"
         }
       },
       "oauth_client": [

@@ -38,7 +38,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "br.com.myapp.loja"
+        applicationId "com.example.store_management"
         minSdkVersion 21
         targetSdkVersion 28
         multiDexEnabled true
