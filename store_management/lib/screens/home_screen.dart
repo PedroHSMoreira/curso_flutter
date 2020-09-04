@@ -4,6 +4,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:store_management/blocs/orders_bloc.dart';
 import 'package:store_management/blocs/user_bloc.dart';
 import 'package:store_management/tabs/orders_tab.dart';
+import 'package:store_management/tabs/products_tab.dart';
 import 'package:store_management/tabs/users_tab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController;
-  int _page = 0;
+  int _page = 1;
 
   UserBloc _userBloc;
   OrdersBloc _ordersBloc;
@@ -81,9 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               UsersTab(),
               OrdersTab(),
-              Container(
-                color: Colors.yellow,
-              ),
+              ProductsTab(),
             ],
           ),
         ),
