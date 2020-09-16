@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _pageController = PageController(initialPage: 1);
 
     _userBloc = UserBloc();
     _ordersBloc = OrdersBloc();
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return null;
       case 1:
         return SpeedDial(
-          child: Icon(Icons.sort),
+          animatedIcon: AnimatedIcons.menu_arrow,
           backgroundColor: Colors.pinkAccent,
           overlayOpacity: 0.4,
           overlayColor: Colors.black,
@@ -128,6 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         );
+      default:
+        return null;
     }
   }
 }
