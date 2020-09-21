@@ -74,7 +74,7 @@ class CategoryBloc extends BlocBase {
     if (category == null) {
       await Firestore.instance
           .collection("products")
-          .document(title.toUpperCase())
+          .document(title.toLowerCase())
           .setData(dataToUpdate);
     } else {
       await category.reference.updateData(dataToUpdate);
